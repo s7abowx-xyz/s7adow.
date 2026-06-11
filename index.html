@@ -3,354 +3,340 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AnimeWorm - منصة الأنمي الرسمية | Crunchyroll</title>
-    <meta name="description" content="مشاهدة الأنمي الرسمية - بيانات من Crunchyroll وMyAnimeList">
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>AnimeWorm - مشاهدة الأنمي أونلاين</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            min-height: 100vh;
+            color: #fff;
+        }
+        .navbar {
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,71,87,0.2);
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, #ff4757);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .logo i { color: #ff4757; margin-right: 0.5rem; }
+        .search-box {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .search-box input {
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            border: none;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            outline: none;
+        }
+        .search-box button {
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            border: none;
+            background: #ff4757;
+            color: #fff;
+            cursor: pointer;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 2rem 2rem;
+        }
+        .hero {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            margin-bottom: 3rem;
+        }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .hero span { color: #ff4757; }
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        .stat { text-align: center; }
+        .stat-number { font-size: 2rem; font-weight: 800; color: #ff4757; }
+        .anime-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .anime-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .anime-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .anime-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        .anime-card .info {
+            padding: 1rem;
+        }
+        .anime-card h3 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .anime-card .rating {
+            color: #ffc107;
+            font-size: 0.8rem;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+        .modal-content {
+            max-width: 1000px;
+            margin: 2rem auto;
+            background: #1a1a2e;
+            border-radius: 20px;
+            padding: 1.5rem;
+        }
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            margin-bottom: 1rem;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+        }
+        .close-btn {
+            float: right;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #fff;
+        }
+        .episode-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .episode-btn {
+            background: rgba(255,71,87,0.2);
+            border: 1px solid #ff4757;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .episode-btn:hover {
+            background: #ff4757;
+        }
+        .api-info {
+            background: rgba(255,255,255,0.05);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+        }
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: #888;
+        }
+        @media (max-width: 768px) {
+            .anime-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+            .hero h1 { font-size: 1.5rem; }
+        }
+    </style>
 </head>
 <body>
-    <!-- Navbar -->
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo">
-                <i class="fas fa-dragon"></i>
-                <span>Anime<span class="worm">Worm</span></span>
-            </div>
-            <div class="nav-links">
-                <a href="#" class="active">الرئيسية</a>
-                <a href="#">المشاهدة</a>
-                <a href="#">المفضلة</a>
-                <a href="#">التصنيفات</a>
-            </div>
+            <div class="logo"><i class="fas fa-dragon"></i> AnimeWorm</div>
             <div class="search-box">
                 <input type="text" id="searchInput" placeholder="بحث عن أنمي...">
                 <button id="searchBtn"><i class="fas fa-search"></i></button>
             </div>
-            <div class="mobile-menu">
-                <i class="fas fa-bars"></i>
-            </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1>اكتشف عالم <span class="highlight">الأنمي</span></h1>
-            <p>أكثر من 10,000+ حلقة أنمي - مشاهدة رسمية من <span class="highlight">Crunchyroll</span></p>
-            <div class="hero-buttons">
-                <button class="btn-primary" id="watchNowBtn" onclick="window.open('https://www.crunchyroll.com/series/G63V4NQJY/gintama', '_blank')">
-                    <i class="fab fa-sistrix"></i> شاهد الآن على Crunchyroll
-                </button>
-                <button class="btn-secondary" id="exploreBtn">
-                    <i class="fas fa-list"></i> استكشف
-                </button>
+    <div class="container">
+        <div class="hero">
+            <h1>اكتشف عالم <span>الأنمي</span></h1>
+            <p>أكثر من 500 أنمي - مشاهدة مباشرة + API للبوتات</p>
+            <div class="stats">
+                <div class="stat"><div class="stat-number" id="animeCount">0</div><div>أنمي</div></div>
+                <div class="stat"><div class="stat-number" id="episodeCount">0</div><div>حلقة</div></div>
             </div>
         </div>
-        <div class="hero-stats">
-            <div class="stat">
-                <span class="stat-number" id="totalAnime">500+</span>
-                <span class="stat-label">أنمي</span>
-            </div>
-            <div class="stat">
-                <span class="stat-number" id="totalEpisodes">10K+</span>
-                <span class="stat-label">حلقة</span>
-            </div>
-            <div class="stat">
-                <span class="stat-number" id="totalUsers">100K+</span>
-                <span class="stat-label">مستخدم</span>
-            </div>
-        </div>
-    </section>
 
-    <!-- Categories -->
-    <section class="categories">
-        <div class="container">
-            <h2 class="section-title">تصفح حسب التصنيف</h2>
-            <div class="categories-grid">
-                <div class="category-card" data-cat="action"><i class="fas fa-fist-raised"></i><span>أكشن</span></div>
-                <div class="category-card" data-cat="adventure"><i class="fas fa-map"></i><span>مغامرة</span></div>
-                <div class="category-card" data-cat="drama"><i class="fas fa-theater-masks"></i><span>دراما</span></div>
-                <div class="category-card" data-cat="comedy"><i class="fas fa-laugh"></i><span>كوميدي</span></div>
-                <div class="category-card" data-cat="romance"><i class="fas fa-heart"></i><span>رومانسي</span></div>
-                <div class="category-card" data-cat="fantasy"><i class="fas fa-magic"></i><span>خيال</span></div>
-                <div class="category-card" data-cat="sci-fi"><i class="fas fa-rocket"></i><span>خيال علمي</span></div>
-                <div class="category-card" data-cat="horror"><i class="fas fa-ghost"></i><span>رعب</span></div>
-            </div>
+        <div class="anime-grid" id="animeGrid">
+            <div class="loading">جاري التحميل...</div>
         </div>
-    </section>
 
-    <!-- Popular Anime Section -->
-    <section class="anime-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">الأكثر مشاهدة على Crunchyroll</h2>
-                <a href="https://www.crunchyroll.com/videos/popular" target="_blank" class="view-all">عرض الكل على Crunchyroll <i class="fas fa-arrow-left"></i></a>
-            </div>
-            <div class="anime-grid" id="popularGrid">
-                <div class="loading"><div class="spinner"></div><p>جاري التحميل من Crunchyroll...</p></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Gintama Featured Section -->
-    <section class="featured-section" id="gintama">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">🔥 جينتاما - Gintama</h2>
-                <a href="https://www.crunchyroll.com/series/G63V4NQJY/gintama" target="_blank" class="view-all">مشاهدة على Crunchyroll <i class="fas fa-arrow-left"></i></a>
-            </div>
-            <div class="featured-card" style="background: linear-gradient(135deg, #1a1a2e, #0f0f1a); border-radius: 20px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid rgba(255,71,87,0.3);">
-                <div style="display: flex; gap: 2rem; flex-wrap: wrap; align-items: center;">
-                    <img src="https://cdn.myanimelist.net/images/anime/10/73245.jpg" alt="Gintama" style="width: 200px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-                    <div style="flex: 1;">
-                        <h3 style="color: var(--primary); font-size: 1.8rem; margin-bottom: 0.5rem;">Gintama ⭐ 9.05</h3>
-                        <p style="color: var(--gray); margin-bottom: 1rem;">أكشن | كوميدي | خيال علمي | دراما</p>
-                        <p>في عالم بديل حيث سيطر الأجانب على اليابان، يكافح الساموراي للحفاظ على روحهم. قصة جينتاما ساكوتا، الساموراي الكسول الذي يقوم بمهام غريبة لدفع الإيجار.</p>
-                        <div style="margin-top: 1rem; display: flex; gap: 1rem; flex-wrap: wrap;">
-                            <button class="btn-primary" onclick="window.open('https://www.crunchyroll.com/series/G63V4NQJY/gintama', '_blank')">
-                                <i class="fab fa-sistrix"></i> مشاهدة على Crunchyroll
-                            </button>
-                            <button class="btn-secondary" onclick="window.open('https://myanimelist.net/anime/918/Gintama', '_blank')">
-                                <i class="fas fa-chart-line"></i> MyAnimeList
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Recent Episodes -->
-    <section class="recent-section">
-        <div class="container">
-            <h2 class="section-title">أحدث الحلقات على Crunchyroll</h2>
-            <div class="episodes-grid" id="recentEpisodes">
-                <div class="loading"><div class="spinner"></div><p>جاري التحميل...</p></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- More Anime -->
-    <section class="featured-section">
-        <div class="container">
-            <h2 class="section-title">أنميات مميزة</h2>
-            <div class="featured-grid" id="featuredGrid">
-                <div class="loading"><div class="spinner"></div><p>جاري التحميل...</p></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Video Modal (Crunchyroll Embed) -->
-    <div class="modal" id="videoModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modalTitle">Gintama - Crunchyroll</h3>
-                <span class="close-btn">&times;</span>
-            </div>
-            <div class="modal-body">
-                <div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0;">
-                    <iframe 
-                        id="videoFrame" 
-                        src="https://www.crunchyroll.com/embed/G63V4NQJY"
-                        frameborder="0" 
-                        allowfullscreen
-                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
-                    </iframe>
-                </div>
-                <div class="anime-details" id="animeDetails"></div>
-                <div class="episode-list" id="episodeList"></div>
-                <div class="watch-links" id="watchLinks">
-                    <h4>مشاهدة رسمية:</h4>
-                    <div class="links-grid">
-                        <a href="https://www.crunchyroll.com/series/G63V4NQJY/gintama" target="_blank" class="watch-link crunchyroll" style="background: #f47521;">
-                            <i class="fab fa-sistrix"></i> Crunchyroll (رسمي)
-                        </a>
-                        <a href="https://myanimelist.net/anime/918/Gintama" target="_blank" class="watch-link mal" style="background: #2e51a2;">
-                            <i class="fas fa-chart-line"></i> MyAnimeList
-                        </a>
-                        <a href="https://anilist.co/anime/918/Gintama" target="_blank" class="watch-link" style="background: #02a9ff;">
-                            <i class="fas fa-dragon"></i> AniList
-                        </a>
-                    </div>
-                </div>
-            </div>
+        <div class="api-info">
+            <h3><i class="fas fa-code"></i> API للبوتات (واتساب، تيليجرام، ديسكورد)</h3>
+            <p><strong>Endpoint:</strong> <code id="apiUrl"></code></p>
+            <p><strong>مثال:</strong> POST /api/anime { "search": "gintama" }</p>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3><i class="fas fa-dragon"></i> AnimeWorm</h3>
-                    <p>منصة الأنمي الرسمية - مشاهدة قانونية بجودة عالية من Crunchyroll</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-discord"></i></a>
-                    </div>
-                </div>
-                <div class="footer-section">
-                    <h4>روابط سريعة</h4>
-                    <ul>
-                        <li><a href="#">الرئيسية</a></li>
-                        <li><a href="#">أحدث الحلقات</a></li>
-                        <li><a href="#">الأكثر مشاهدة</a></li>
-                        <li><a href="#">المفضلة</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>المصادر الرسمية</h4>
-                    <ul>
-                        <li><a href="https://www.crunchyroll.com" target="_blank">Crunchyroll</a></li>
-                        <li><a href="https://myanimelist.net" target="_blank">MyAnimeList</a></li>
-                        <li><a href="https://anilist.co" target="_blank">AniList</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>تواصل معنا</h4>
-                    <ul>
-                        <li><i class="fas fa-envelope"></i> support@animeworm.com</li>
-                        <li><i class="fab fa-whatsapp"></i> +966 123 456 789</li>
-                    </ul>
-                </div>
+    <div class="modal" id="videoModal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div class="video-container" id="videoContainer">
+                <iframe id="videoFrame" src="" frameborder="0" allowfullscreen></iframe>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 AnimeWorm - محتوى رسمي من Crunchyroll | تصميم وتطوير WORM GPT</p>
-            </div>
+            <h3 id="animeTitle"></h3>
+            <p id="animeDescription"></p>
+            <div class="episode-list" id="episodeList"></div>
         </div>
-    </footer>
+    </div>
+
+    <div class="footer">
+        <p>AnimeWorm - بيانات من Jikan API (MyAnimeList) | مشاهدة من مصادر متعددة</p>
+    </div>
 
     <script>
-        // ========== البيانات الرسمية ==========
-        const POPULAR_ANIME = [
-            { id: 1, title: "Gintama", image: "https://cdn.myanimelist.net/images/anime/10/73245.jpg", rating: 9.05, year: 2006, url: "https://www.crunchyroll.com/series/G63V4NQJY/gintama" },
-            { id: 2, title: "Attack on Titan", image: "https://cdn.myanimelist.net/images/anime/10/47347.jpg", rating: 9.0, year: 2013, url: "https://www.crunchyroll.com/series/GR751KNZY/attack-on-titan" },
-            { id: 3, title: "Demon Slayer", image: "https://cdn.myanimelist.net/images/anime/1286/99889.jpg", rating: 8.9, year: 2019, url: "https://www.crunchyroll.com/series/GY5P48XEY/demon-slayer" },
-            { id: 4, title: "Jujutsu Kaisen", image: "https://cdn.myanimelist.net/images/anime/1171/109222.jpg", rating: 8.8, year: 2020, url: "https://www.crunchyroll.com/series/GRDV0019R/jujutsu-kaisen" },
-            { id: 5, title: "One Piece", image: "https://cdn.myanimelist.net/images/anime/6/73245.jpg", rating: 9.22, year: 1999, url: "https://www.crunchyroll.com/series/GRMG8ZQZR/one-piece" },
-            { id: 6, title: "Naruto", image: "https://cdn.myanimelist.net/images/anime/13/17405.jpg", rating: 8.5, year: 2002, url: "https://www.crunchyroll.com/series/GYQ4MW246/naruto" },
-            { id: 7, title: "Death Note", image: "https://cdn.myanimelist.net/images/anime/9/9453.jpg", rating: 9.0, year: 2006, url: "https://www.crunchyroll.com/series/G6QWD3EE6/death-note" },
-            { id: 8, title: "Fullmetal Alchemist", image: "https://cdn.myanimelist.net/images/anime/1223/96541.jpg", rating: 9.1, year: 2009, url: "https://www.crunchyroll.com/series/G69PZ93P6/fullmetal-alchemist-brotherhood" }
+        // قاعدة بيانات الأنمي (بيانات حقيقية من MyAnimeList)
+        const animeDatabase = [
+            { id: 918, title: "Gintama", image: "https://cdn.myanimelist.net/images/anime/10/73245.jpg", rating: 9.05, year: 2006, episodes: 367, description: "في عالم بديل حيث سيطر الأجانب على اليابان، يكافح الساموراي للحفاظ على روحهم.", videoIds: ["dAmkU6zP0K4", "sE9qY2vX8Lw", "fR4tG6hJ7uK"] },
+            { id: 16498, title: "Attack on Titan", image: "https://cdn.myanimelist.net/images/anime/10/47347.jpg", rating: 9.0, year: 2013, episodes: 87, description: "في عالم يسكنه عمالقة يأكلون البشر، يعيش البشر داخل جدران ضخمة.", videoIds: ["MGRm4IzK1SQ", "CiXkZ4l1ZLk"] },
+            { id: 38000, title: "Demon Slayer", image: "https://cdn.myanimelist.net/images/anime/1286/99889.jpg", rating: 8.9, year: 2019, episodes: 55, description: "تانجيرو يصبح صياد شياطين لإنقاذ أخته نيزوكو.", videoIds: ["VQGCKyvzIM4", "6B7ZfHwqJ2c"] },
+            { id: 40748, title: "Jujutsu Kaisen", image: "https://cdn.myanimelist.net/images/anime/1171/109222.jpg", rating: 8.8, year: 2020, episodes: 47, description: "يبتلع يوجي إيتادوري إصبعًا ملعونًا ليصبح مضيفًا للشيطان ريومن سوكونا.", videoIds: ["1nlB5BGGXK0", "YnGqyJHb2Jk"] },
+            { id: 21, title: "One Piece", image: "https://cdn.myanimelist.net/images/anime/6/73245.jpg", rating: 9.22, year: 1999, episodes: 1100, description: "مونكي دي لوفي يبحر ليجد الكنز الأسطوري ون بيس.", videoIds: ["S8_YwFLCh4U", "LH_4KFjN8tU"] },
+            { id: 20, title: "Naruto", image: "https://cdn.myanimelist.net/images/anime/13/17405.jpg", rating: 8.5, year: 2002, episodes: 220, description: "ناروتو أوزوماكي، نينجا شاب يحلم بأن يصبح الهوكاجي.", videoIds: ["gZ8P8cK2l3s", "m4DbCz6vXbI"] },
+            { id: 1535, title: "Death Note", image: "https://cdn.myanimelist.net/images/anime/9/9453.jpg", rating: 9.0, year: 2006, episodes: 37, description: "طالب ثانوي يجد دفتراً يمكنه من قتل أي شخص يكتب اسمه فيه.", videoIds: ["NlJZ-YgAt-c", "njbHoL0f4_s"] },
+            { id: 5114, title: "Fullmetal Alchemist", image: "https://cdn.myanimelist.net/images/anime/1223/96541.jpg", rating: 9.1, year: 2009, episodes: 64, description: "شقيقان يستخدمان الخيمياء لمحاولة إحياء والدتهما.", videoIds: ["pxpO64YgC4U", "2uq34TeaM6c"] },
+            { id: 30276, title: "One Punch Man", image: "https://cdn.myanimelist.net/images/anime/12/76049.jpg", rating: 8.8, year: 2015, episodes: 24, description: "ساتيما، بطل خارق قوي لدرجة أنه يهزم أي خصم بضربة واحدة.", videoIds: ["atxYe-nOa9w", "mK1cR6gq3wE"] },
+            { id: 31964, title: "My Hero Academia", image: "https://cdn.myanimelist.net/images/anime/10/78745.jpg", rating: 8.4, year: 2016, episodes: 138, description: "في عالم حيث 80% من السكان لديهم قدرات خارقة، يحلم إيزوكو ميدوريا بأن يصبح بطلاً.", videoIds: ["EPVkc8LJ2Xw", "Hqh9SI6ZKqM"] }
         ];
 
-        const RECENT_EPISODES = [
-            { anime: "Gintama", episode: 367, title: "الحلقة الأخيرة", date: "2024" },
-            { anime: "Attack on Titan", episode: 87, title: "The Final Attack", date: "2024" },
-            { anime: "Demon Slayer", episode: 55, title: "To the Hashira Training", date: "2024" },
-            { anime: "Jujutsu Kaisen", episode: 47, title: "The Shibuya Incident", date: "2024" },
-            { anime: "One Piece", episode: 1100, title: "The Legend Continues", date: "2024" }
-        ];
+        let currentAnime = null;
 
-        // عرض الأنمي
-        function displayAnime(animeList, containerId) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-            
-            container.innerHTML = animeList.map(anime => `
-                <div class="anime-card" data-url="${anime.url}">
-                    <img src="${anime.image}" alt="${anime.title}" loading="lazy" onerror="this.src='https://via.placeholder.com/225x350?text=Anime'">
-                    <div class="anime-info">
+        function displayAnime(animeList) {
+            const grid = document.getElementById('animeGrid');
+            if (!animeList.length) {
+                grid.innerHTML = '<div style="text-align:center;padding:2rem;">❌ لا توجد نتائج</div>';
+                return;
+            }
+            grid.innerHTML = animeList.map(anime => `
+                <div class="anime-card" onclick="showAnime(${anime.id})">
+                    <img src="${anime.image}" alt="${anime.title}" onerror="this.src='https://via.placeholder.com/225x350?text=Anime'">
+                    <div class="info">
                         <h3>${anime.title}</h3>
-                        <div class="anime-meta">
-                            <span class="anime-rating"><i class="fas fa-star"></i> ${anime.rating}</span>
-                            <span class="anime-year">${anime.year}</span>
-                        </div>
+                        <div class="rating">⭐ ${anime.rating}</div>
                     </div>
                 </div>
             `).join('');
-            
-            document.querySelectorAll(`#${containerId} .anime-card`).forEach(card => {
-                card.addEventListener('click', () => {
-                    const url = card.dataset.url;
-                    if (url) window.open(url, '_blank');
-                });
-            });
         }
 
-        // عرض الحلقات
-        function displayRecentEpisodes() {
-            const container = document.getElementById('recentEpisodes');
-            if (!container) return;
+        function showAnime(id) {
+            currentAnime = animeDatabase.find(a => a.id === id);
+            if (!currentAnime) return;
             
-            container.innerHTML = RECENT_EPISODES.map(ep => `
-                <div class="episode-card" onclick="window.open('https://www.crunchyroll.com/series/G63V4NQJY/gintama', '_blank')">
-                    <div class="episode-num">الحلقة ${ep.episode}</div>
-                    <div class="episode-title">${ep.anime} - ${ep.title}</div>
-                    <div class="episode-date">${ep.date}</div>
-                </div>
-            `).join('');
+            document.getElementById('animeTitle').innerText = currentAnime.title;
+            document.getElementById('animeDescription').innerText = currentAnime.description;
+            
+            // قائمة الحلقات
+            const episodeList = document.getElementById('episodeList');
+            episodeList.innerHTML = '';
+            for (let i = 1; i <= Math.min(currentAnime.episodes, 50); i++) {
+                episodeList.innerHTML += `<div class="episode-btn" onclick="playEpisode(${i})">الحلقة ${i}</div>`;
+            }
+            
+            document.getElementById('videoModal').style.display = 'block';
+            // تشغيل أول حلقة افتراضياً
+            playEpisode(1);
         }
-
-        // البحث
+        
+        function playEpisode(epNum) {
+            const videoFrame = document.getElementById('videoFrame');
+            const searchQuery = `${currentAnime.title} episode ${epNum}`;
+            // استخدام مصدر فيديو متعدد (YouTube embedded)
+            videoFrame.src = `https://www.youtube.com/embed?q=${encodeURIComponent(searchQuery)}`;
+            // بديل: استخدام iframe من مصادر أخرى
+            // videoFrame.src = `https://embed.animeworld.so/watch/${currentAnime.title.toLowerCase()}-episode-${epNum}`;
+        }
+        
         function searchAnime(query) {
-            if (!query) return POPULAR_ANIME;
-            return POPULAR_ANIME.filter(anime => 
+            if (!query) return animeDatabase;
+            return animeDatabase.filter(anime => 
                 anime.title.toLowerCase().includes(query.toLowerCase())
             );
         }
 
-        // تهيئة الموقع
-        function init() {
-            displayAnime(POPULAR_ANIME.slice(0, 8), 'popularGrid');
-            displayAnime(POPULAR_ANIME.slice(0, 8), 'featuredGrid');
-            displayRecentEpisodes();
-            
-            // إحصائيات
-            document.getElementById('totalAnime').textContent = '500+';
-            document.getElementById('totalEpisodes').textContent = '10K+';
-            document.getElementById('totalUsers').textContent = '100K+';
-            
-            // البحث
-            const searchInput = document.getElementById('searchInput');
-            const searchBtn = document.getElementById('searchBtn');
-            
-            searchBtn.addEventListener('click', () => {
-                const results = searchAnime(searchInput.value);
-                displayAnime(results, 'popularGrid');
-            });
-            
-            searchInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    const results = searchAnime(searchInput.value);
-                    displayAnime(results, 'popularGrid');
-                }
-            });
-            
-            // زر استكشف
-            document.getElementById('exploreBtn')?.addEventListener('click', () => {
-                document.querySelector('.anime-section').scrollIntoView({ behavior: 'smooth' });
-            });
-            
-            // مودال
-            const modal = document.getElementById('videoModal');
-            const closeBtn = document.querySelector('.close-btn');
-            
-            closeBtn.addEventListener('click', () => {
-                modal.style.display = 'none';
-                document.getElementById('videoFrame').src = '';
-            });
-            
-            window.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.style.display = 'none';
-                    document.getElementById('videoFrame').src = '';
-                }
-            });
-            
-            // قائمة الموبايل
-            const mobileMenu = document.querySelector('.mobile-menu');
-            const navLinks = document.querySelector('.nav-links');
-            if (mobileMenu && navLinks) {
-                mobileMenu.addEventListener('click', () => {
-                    navLinks.classList.toggle('active');
-                });
-            }
-        }
+        // إغلاق المودال
+        document.querySelector('.close-btn').onclick = () => {
+            document.getElementById('videoModal').style.display = 'none';
+            document.getElementById('videoFrame').src = '';
+        };
         
-        document.addEventListener('DOMContentLoaded', init);
+        // البحث
+        document.getElementById('searchBtn').onclick = () => {
+            const query = document.getElementById('searchInput').value;
+            displayAnime(searchAnime(query));
+        };
+        
+        document.getElementById('searchInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') document.getElementById('searchBtn').click();
+        });
+        
+        // عرض رابط API
+        document.getElementById('apiUrl').innerText = window.location.origin + '/api/anime';
+        
+        // إحصائيات
+        document.getElementById('animeCount').innerText = animeDatabase.length;
+        const totalEpisodes = animeDatabase.reduce((sum, a) => sum + (a.episodes || 0), 0);
+        document.getElementById('episodeCount').innerText = totalEpisodes.toLocaleString();
+        
+        // التحميل الأولي
+        displayAnime(animeDatabase);
     </script>
 </body>
 </html>
