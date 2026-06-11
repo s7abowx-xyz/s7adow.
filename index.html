@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AnimeWorm - منصة الأنمي الاحترافية</title>
+    <title>AnimeWorm - منصة الأنمي الرسمية</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Navbar -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">
@@ -32,11 +31,10 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
             <h1>اكتشف عالم <span class="highlight">الأنمي</span></h1>
-            <p>أكثر من 10,000+ حلقة أنمي بجودة عالية وترجمة احترافية</p>
+            <p>أكثر من 10,000+ حلقة أنمي - بيانات رسمية من MyAnimeList وAniList</p>
             <div class="hero-buttons">
                 <button class="btn-primary" id="watchNowBtn"><i class="fas fa-play"></i> شاهد الآن</button>
                 <button class="btn-secondary"><i class="fas fa-list"></i> استكشف</button>
@@ -44,62 +42,36 @@
         </div>
         <div class="hero-stats">
             <div class="stat">
-                <span class="stat-number">10K+</span>
-                <span class="stat-label">حلقة</span>
-            </div>
-            <div class="stat">
-                <span class="stat-number">500+</span>
+                <span class="stat-number" id="totalAnime">0</span>
                 <span class="stat-label">أنمي</span>
             </div>
             <div class="stat">
-                <span class="stat-number">100K+</span>
+                <span class="stat-number" id="totalEpisodes">0</span>
+                <span class="stat-label">حلقة</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number" id="totalUsers">0</span>
                 <span class="stat-label">مستخدم</span>
             </div>
         </div>
     </section>
 
-    <!-- Categories -->
     <section class="categories">
         <div class="container">
             <h2 class="section-title">تصفح حسب التصنيف</h2>
             <div class="categories-grid">
-                <div class="category-card" data-cat="action">
-                    <i class="fas fa-fist-raised"></i>
-                    <span>أكشن</span>
-                </div>
-                <div class="category-card" data-cat="adventure">
-                    <i class="fas fa-map"></i>
-                    <span>مغامرة</span>
-                </div>
-                <div class="category-card" data-cat="drama">
-                    <i class="fas fa-theater-masks"></i>
-                    <span>دراما</span>
-                </div>
-                <div class="category-card" data-cat="comedy">
-                    <i class="fas fa-laugh"></i>
-                    <span>كوميدي</span>
-                </div>
-                <div class="category-card" data-cat="romance">
-                    <i class="fas fa-heart"></i>
-                    <span>رومانسي</span>
-                </div>
-                <div class="category-card" data-cat="fantasy">
-                    <i class="fas fa-magic"></i>
-                    <span>خيال</span>
-                </div>
-                <div class="category-card" data-cat="sci-fi">
-                    <i class="fas fa-rocket"></i>
-                    <span>خيال علمي</span>
-                </div>
-                <div class="category-card" data-cat="horror">
-                    <i class="fas fa-ghost"></i>
-                    <span>رعب</span>
-                </div>
+                <div class="category-card" data-cat="action"><i class="fas fa-fist-raised"></i><span>أكشن</span></div>
+                <div class="category-card" data-cat="adventure"><i class="fas fa-map"></i><span>مغامرة</span></div>
+                <div class="category-card" data-cat="drama"><i class="fas fa-theater-masks"></i><span>دراما</span></div>
+                <div class="category-card" data-cat="comedy"><i class="fas fa-laugh"></i><span>كوميدي</span></div>
+                <div class="category-card" data-cat="romance"><i class="fas fa-heart"></i><span>رومانسي</span></div>
+                <div class="category-card" data-cat="fantasy"><i class="fas fa-magic"></i><span>خيال</span></div>
+                <div class="category-card" data-cat="sci-fi"><i class="fas fa-rocket"></i><span>خيال علمي</span></div>
+                <div class="category-card" data-cat="horror"><i class="fas fa-ghost"></i><span>رعب</span></div>
             </div>
         </div>
     </section>
 
-    <!-- Popular Anime -->
     <section class="anime-section">
         <div class="container">
             <div class="section-header">
@@ -107,32 +79,29 @@
                 <a href="#" class="view-all">عرض الكل <i class="fas fa-arrow-left"></i></a>
             </div>
             <div class="anime-grid" id="popularGrid">
-                <!-- سيتم تعبئتها بواسطة JavaScript -->
+                <div class="loading"><div class="spinner"></div><p>جاري التحميل من MyAnimeList...</p></div>
             </div>
         </div>
     </section>
 
-    <!-- Recent Episodes -->
     <section class="recent-section">
         <div class="container">
             <h2 class="section-title">أحدث الحلقات</h2>
             <div class="episodes-grid" id="recentEpisodes">
-                <!-- سيتم تعبئتها بواسطة JavaScript -->
+                <div class="loading"><div class="spinner"></div><p>جاري التحميل...</p></div>
             </div>
         </div>
     </section>
 
-    <!-- Featured Anime -->
     <section class="featured-section">
         <div class="container">
             <h2 class="section-title">أنميات مميزة</h2>
             <div class="featured-grid" id="featuredGrid">
-                <!-- سيتم تعبئتها بواسطة JavaScript -->
+                <div class="loading"><div class="spinner"></div><p>جاري التحميل...</p></div>
             </div>
         </div>
     </section>
 
-    <!-- Video Player Modal -->
     <div class="modal" id="videoModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -143,20 +112,22 @@
                 <div class="video-container">
                     <iframe id="videoFrame" src="" frameborder="0" allowfullscreen></iframe>
                 </div>
-                <div class="episode-list" id="episodeList">
-                    <!-- قائمة الحلقات -->
+                <div class="anime-details" id="animeDetails"></div>
+                <div class="episode-list" id="episodeList"></div>
+                <div class="watch-links" id="watchLinks">
+                    <h4>مشاهدة رسمية:</h4>
+                    <div class="links-grid"></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
                     <h3><i class="fas fa-dragon"></i> AnimeWorm</h3>
-                    <p>منصة الأنمي الأولى لمشاهدة أحدث الحلقات بجودة عالية وترجمة احترافية مجاناً.</p>
+                    <p>منصة الأنمي الأولى - بيانات رسمية من MyAnimeList وAniList</p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
@@ -166,32 +137,19 @@
                 </div>
                 <div class="footer-section">
                     <h4>روابط سريعة</h4>
-                    <ul>
-                        <li><a href="#">الرئيسية</a></li>
-                        <li><a href="#">أحدث الحلقات</a></li>
-                        <li><a href="#">الأكثر مشاهدة</a></li>
-                        <li><a href="#">المفضلة</a></li>
-                    </ul>
+                    <ul><li><a href="#">الرئيسية</a></li><li><a href="#">أحدث الحلقات</a></li><li><a href="#">الأكثر مشاهدة</a></li></ul>
                 </div>
                 <div class="footer-section">
-                    <h4>التصنيفات</h4>
+                    <h4>المصادر الرسمية</h4>
                     <ul>
-                        <li><a href="#">أكشن</a></li>
-                        <li><a href="#">مغامرة</a></li>
-                        <li><a href="#">دراما</a></li>
-                        <li><a href="#">كوميدي</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>تواصل معنا</h4>
-                    <ul>
-                        <li><i class="fas fa-envelope"></i> support@animeworm.com</li>
-                        <li><i class="fab fa-whatsapp"></i> +966 123 456 789</li>
+                        <li><a href="https://myanimelist.net" target="_blank">MyAnimeList</a></li>
+                        <li><a href="https://anilist.co" target="_blank">AniList</a></li>
+                        <li><a href="https://crunchyroll.com" target="_blank">Crunchyroll</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 AnimeWorm - جميع الحقوق محفوظة | تصميم وتطوير WORM GPT</p>
+                <p>&copy; 2024 AnimeWorm - بيانات من MyAnimeList API | تصميم WORM GPT</p>
             </div>
         </div>
     </footer>
